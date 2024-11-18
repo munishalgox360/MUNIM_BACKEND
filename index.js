@@ -1,5 +1,6 @@
 import 'dotenv/config.js';
 import express from 'express';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
