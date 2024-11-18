@@ -1,3 +1,4 @@
+import 'dotenv/config.js';
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -6,9 +7,7 @@ const __dirname = dirname(__filename)
 import { createServer } from 'http';
 import DBConnection from './config/DBconnect.js';
 import routes from './routes/index.js';
-import morgan from 'morgan';
 import path from 'path';
-
 
 
 const app = express();
@@ -27,8 +26,6 @@ app.get('/', function(req,res){
 })
 
 app.use('/api',routes);
-
-
 
 createServer(app).listen(PORT, ()=> console.log(`MUNIM's Server Listening (${PORT})`));
 
