@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
     company: { type: String, trim: true, required: true },
     mobile: { type: String, trim: true, required: true },
     email: { type: String, trim: true, required: true },
+    image: { type : String, trim: true, default : 'https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png' },
     altMobile: { type: String, trim: true },
     altEmail: { type: String, trim: true },
     experience: { type: Number, min: [1, "Minimum Experience Should be 1 Year"] },
@@ -30,10 +31,10 @@ const UserSchema = new mongoose.Schema({
 },{ timestamps : true });
 
 
-UserSchema.pre('save',(next) => {
-    this.email = this.email.toLowerCase();
-    next();
-})
+// UserSchema.pre('save',(next) => {
+//     this.email = this.email.toLowerCase();
+//     next();
+// })
 
 const UserModel = new mongoose.model("User", UserSchema);
 export default UserModel;
