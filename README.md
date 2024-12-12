@@ -10,12 +10,12 @@ Munim The Accoutant
 
 
 
-[APP](//www.plantuml.com/plantuml/png/xLPDRzGm4Btlhp3BWHRKYdBi0JNqGwf4swNR2yUfFPiTrR63FGbT8VZjE8chQfrOQ47Y0djPPTwycVZDHtpY6HmtbPwzu3LMADOW7z3DPbA3z-9K4neMtsOY_5w9Cs0G5uHQUR4dRLK7RjKv7Ett7Y-5x0cNP-9OBDcHAQFTG8MfhRBtf4TMh81qQdHsxDZdDvjhg7BGtQREGOLI3htFe8krDJdc-TJxHUoZbS1aJGQ-nP8ykzubIDbbwFwYK-dvkgdkqQNiGCq0pgv8uu8aDmx7AAxGELGBs7H5ka9UMvLwWUQhM8SHC7bK0BK6D_r2v0l9r7QnFbYh4KmF71o8cyNvRN5tUNEz34-ncsvg7BH8ckdTq4m_XElrGhUt7mAsbbHlVoEqBScaHeyQ9I_HjIGn1Ijum2X32ZMrjg3Eh6mwrAUm12DHZyD6hWB6nL26P_3xq_X4Md1eIQ7ROOxgIFa_IV_c9FcXSmg7CAAr8HQ4HCIR57F0uI5OBxG5pavb1F2nHaTe96RIB-sAly9O46jEjMtKTi28VMb0qugconT1L9yHt7RHo7WcRdWidrBKnGBzQJhqNzmnL9gYT8XJYoIER9nvl-EUoQyICCRoSEH2LMHss2BG-UTNI7ul_8wSST4QA77XI8OmwHd1Tm8ETueKioqwZrZKzKWPZ-wg2vke7gJ1HubrhyoJhZk8eo8bqMVg4fCmfhQXP-36_xc2iK-cssFP9zcI8DxGvaVpaEEzcByzF7mzVvRZECRpi_HRz6l6q6s9Nynt72kTyKgJFRkVe55DfNy2)
+[APP](//www.plantuml.com/plantuml/png/xLPDRnCn4BtdLvXme0MreXnxG0tza2hHDZJbmAcQsfFDg5vx6Sy68WI_dTsDgxRshcWGuWAvH9atRyP-yn4V106MkhIZPxB04jK2z2toQAGjXA0-peulhxKbTAA-ZLJpUQ6EG42T45eJr9RsPGKiPUkmjzrvF5ThmkcHsbSpON95j3ieCRML_ePiPiKIoAP6zhbZbz-jpg4SWgvMrH0qCOOnX05qkl1kY7dSTxw8lVSQXBmRW2-ne23SkJHIjXdQh-XK13clonlabDrG1m3sSx8u9IqrOuxY79dHJ67L5kaCPU5DwWLMph8wHA3tgW1c0Tn_80eJBRHiOxtptYAu3jZPKHVJuyl9rUd5-Qpv5RlfeiAr5aaplLatqm_5dLx8MzjDmAKdqzbVAUiBSgane4KjC-GbQKp14cunof12TMKzc2ElwnODAQp1QRGnRCur83XTb-4U_FveXiAQUrsnNv91tc2QxYZ_vZpzdwVOEXD6o6XB80jD8f9LYhMAkAAndbWFCZYR4S2l5JAXqpYGVkRdyWLoGRmxjBusMS3FDLYQKt_f8eZc4m8_BXYv82IrvD8PGsqii1_wG__5BKE5cnICsBTAuhZ6PH4st3HFMYPWId8RR93EVtXz3E-4trGqRbi71KwPT1CflIQ4LiD3Ipq2-YLoG9nKLIPEG3xhmaRXKtNkPDr06nCfkJpPAoPXz2t2821r-2C2naxfRv1Pb-UH0W-VQkEzSPFehHg_tjrzERwNPJy63QFUFwKdycB_9SuFy-_7wl_AFp_1FNDqWCwq3zEV)
 
 @startuml
 !theme hacker
 
-class Client {
+class USER_client {
     ' Data Fields (compartment 1)
     # clientID : String
     # name : String
@@ -48,7 +48,7 @@ class Client {
     + updateProfile() : void
 }
 
-class ServiceProvider {
+class USER_service_provider {
     ' Data Fields (compartment 1)
     # providerID : String
     # name : String
@@ -76,7 +76,6 @@ class ServiceProvider {
     # experience : String
     # serviceSoftware : String
     # onCloud : Boolean
-   
     # qualification : String
     # qualifiedYear : Date
     # institute : String
@@ -92,12 +91,12 @@ class ServiceProvider {
     + updateProfile() : void
 }
 
-annotation Admin {
+class USER_admin {
     ' Data Fields (compartment 1)
     # adminID : String
     # name : String
     # role : String
- -- OPERATIONS --
+    -- OPERATIONS --
     ' Operations (compartment 2)
     + managePricing() : void
     + assignClient() : void
@@ -105,23 +104,25 @@ annotation Admin {
     + userManagement() : void
 }
 
-exception Document {
+class Document {
     ' Data Fields (compartment 1)
     # documentID : String
     # clientID : String
     # documentType : String
     # status : String
- -- OPERATIONS --
+    -- OPERATIONS --
     ' Operations (compartment 2)
     + upload() : void
     + updateStatus() : void
 }
 
-Client "1" --> "0..*" Document : uploads
-ServiceProvider "1" --> "0..*" Document : uploads
-Admin "1" --> "0..*" Client : manages
-Admin "1" --> "0..*" ServiceProvider : manages
+USER_client "1" --> "0..*" Document : uploads
+USER_service_provider "1" --> "0..*" Document : uploads
+USER_admin "1" --> "0..*" USER_client : manages
+USER_admin "1" --> "0..*" USER_service_provider : manages
+
 @enduml
+
 
 
 
