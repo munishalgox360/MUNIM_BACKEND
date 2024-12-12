@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
-import { createServer } from 'http';
+import { createServer } from 'https';
 import DBConnection from './config/DBconnect.js';
 import routes from './routes/index.js';
 import path from 'path';
