@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const connectionString = process.env.MONGO_URI
+const connectionString = process.env.MONGO_URI;
 
 const DBConnection = ( async (uri) => {
     try {

@@ -3,7 +3,7 @@ Munim The Accoutant
 
 <img src="https://play-lh.googleusercontent.com/uuzhLk9vS0HhUWqwtycV8cOWJKIVjgaui9I4SGhTTwXMKkD1tygQc4bOWLpDSlkSpoo=w240-h480-rw" height="100px" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 
->Try online billing and Accounting software for small businesses
+>Try online billing and Accounting software
 
 # Developed By :- Algox360 IT Solutions LLP
 <img src="https://algox360.com/img/logo.webp" height="40px">
@@ -126,26 +126,37 @@ USER_admin "1" --> "0..*" USER_service_provider : manages
 
 
 
-[WORK FLOW](//www.plantuml.com/plantuml/dpng/ZP91Ry8m38Nl-HK-JN2OkEymKO4qSM2gLaqxJYQrYaL8cEE2-FThe5rHHxNTKkTzhy-nvr5HjDuxWrQ3mC8nUMq_2f8ZMyeb7BaaQQjPkMTlp5K9Zy-m3Xjsb1qEy0HlL75Kaf7hWXnPxOpX0N8yxvCkT-XxfYk_eD89pmsunXrrrVzvTwb7rRw4PR1rSemmMNB5YiwTOGQBK0kJJCqFaEWiNtqcSv86Vp-uW3S6ey_nLLFiGnMAMaVJMoMWCoaq25PqmLIOZdJFVp2L56RbbGIjmkJwxzd75ZKs2QPc81xhexct52Fr7VqTCfteFfas946NmnBZTXDGoZJ6uFbci-2Lz1HarnB3S5cCN7beMzVmUxPpycLQtcy0)
+[WORK FLOW](//www.plantuml.com/plantuml/png/XPEnRjmm38PtFGMRwJ84tJiKELoM34qE3OhEhCopYSYK8D5N-ErhsIVLE5_QoP3vy-DFYdfCYb67tfbFsb5FaDv9RJS--44T2nc3Lds4WsCIlHpUA9xPqZ7wCpSKBt_tJSzYJC2eR3cWADpjhVM3A4iB-n3k05F-6hFWuE5hFi8N-4uj9wK8kz-i7JXlKTdBlSdXIRNe9-71oubZVqc8isf3UoD7LejDG6dWY6EVDKU7ie4-SGeEnofw3HcRDjnl-4v5z96pg_Zrh2RXFYLk1Lu8uw-ncgp3l4fOpyWIdwbKN33_BlNYbK_ZMhgbrmwAXMffDmJdiO76so4df_iRavO6daeSTdo2XbjMTE0ZM3z4fdZ_SKy_SeKrGVtanmzDgNIphMTHYcWLTcT6m10-_-nGquIyLMfpHIN_vkuSK2pDxWyTIbkdyRyXby05u33J_sACcP_7UfS4stpjR5dQlAELa7SqbNfBMjtHqinQNxqyoyblwdZX-SsEIQcVyru3HLms_96a6Nht1m00)
 
 
 
 @startuml
+!theme sketchy-outline
+
 actor Client
 actor ServiceProvider
 actor Admin
 
-Client -> MobileApp : Register
-Client -> MobileApp : Select Service & Payment Plan
-Client -> PaymentGateway : Make Payment
-Client -> MobileApp : Select Service Provider
-Client -> MobileApp : Send Documents (Digitally / Courier)
-MobileApp -> API_Server : Upload Documents
-Client -> MobileApp : Request Service Status
-API_Server -> DocumentStorage : Retrieve Documents
-Client -> ServiceProvider : Interact (Mobile/WhatsApp)
-ServiceProvider -> API_Server : Upload Processed Documents
-API_Server -> DocumentStorage : Store Processed Documents
-Admin -> AdminDashboard : Monitor Service Network
-Admin -> API_Server : Assign Client to Service Provider
+participant "Accounting App" as App
+
+Client -> App : Register (with location)
+App -> Client : Confirm Registration
+Client -> App : Select Service and Payment Plan
+App -> Client : Display Payment Options
+Client -> App : Make Payment
+App -> Client : Confirm Payment
+App -> ServiceProvider : Assign Nearby Service Provider
+ServiceProvider -> App : Receive Client Assignment
+App -> ServiceProvider : Notify Assignment
+ServiceProvider -> Client : Provide Service (upload documents)
+Client -> App : Send Documents (if digital or courier)
+ServiceProvider -> App : Upload Documents to Cloud
+Client -> ServiceProvider : Interact (via app/WhatsApp)
+ServiceProvider -> Client : Confirm Interaction
+Client -> App : Cancel or Change Service
+App -> ServiceProvider : Notify Service Cancellation or Change
+
+Admin -> App : Manage Pricing and Service Plans
+App -> Admin : Display Client and Service Provider Info
+Admin -> App : Monitor System and Operations
 @enduml

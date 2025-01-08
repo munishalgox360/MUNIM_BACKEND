@@ -1,14 +1,11 @@
 import mongoose from "mongoose";
 
-
-
 const education = new mongoose.Schema({
     qualification : { type: String, trim: true },
     qualifiedYear : { type: Number },    
     institute : { type: String, trim: true },
     additionalQualification : { type: String, trim: true }
 });
-
 
 
 const UserSchema = new mongoose.Schema({
@@ -30,11 +27,6 @@ const UserSchema = new mongoose.Schema({
     education: education
 },{ timestamps : true });
 
-
-// UserSchema.pre('save',(next) => {
-//     this.email = this.email.toLowerCase();
-//     next();
-// })
 
 const UserModel = new mongoose.model("User", UserSchema);
 export default UserModel;

@@ -29,13 +29,13 @@ export async function verifyUser(req, res, next) {
 
     const APP_SECRET = process.env.MUNIM_SECRET_KEY;
     const header = req.headers.authorization;
-    if(!header) return res.sendStatus(401).json({ success : false, message : 'Unauthorize'})
+    if(!header) return res.sendStatus(499).json({ success : false, message : 'Token Required'})
 
     const [type, authToken] = header.split(" ");
-    if(type !== 'bearer') return res.sendStatus(401).json({ success : false, message : 'Unauthorize'});
+    if(type !== 'bearer') return res.sendStatus(498).json({ success : false, message : 'Unauthorize'});
     
     const decode = await JWT.verify(authToken, APP_SECRET);
-    if(!decode) return res.sendStatus(401).json({  success : false, message : 'Session Expired'});
+    if(!decode) return res.sendStatus(498).json({  success : false, message : 'Session Expired'});
 
     const user = await UserModel.findById(decode.user);
     req.user = sanitizeUser(user);

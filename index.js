@@ -11,6 +11,10 @@ import routes from './routes/index.js';
 import path from 'path';
 import morgan from 'morgan';
 
+import swaggerJSDoc from 'swagger-jsdoc';
+import {serve, setup} from 'swagger-ui-express';
+import options from './config/swaggerOption.js';
+const swaggerSpec = swaggerJSDoc(options);
 
 const app = express();
 const PORT = process.env.PORT || 8810;
@@ -22,14 +26,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static('uploads'))
-
 app.use(morgan('dev'));
 
+
+/**
+ * @swagger
+ * /:
+ *  get:
+ *      summary: Server is listening or not 
+ *      description: This is index route for checking Server is listening or not      
+ *      responses:
+ *              200:
+ *                  description: Use for Sever Status
+ * */ 
 app.get('/', function(req,res){
-    res.render('index')
+    res.status(200).render('index')
 })
 
 app.use('/api',routes);
+app.use('/api-docs', serve, setup(swaggerSpec))
 
 // Load SSL certificates
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/kambojproperty.com/privkey.pem', 'utf8');
