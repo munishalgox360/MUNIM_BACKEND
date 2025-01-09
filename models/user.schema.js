@@ -1,11 +1,21 @@
 import mongoose from "mongoose";
 
-const education = new mongoose.Schema({
+const Education = new mongoose.Schema({
     qualification : { type: String, trim: true },
     qualifiedYear : { type: Number },    
     institute : { type: String, trim: true },
     additionalQualification : { type: String, trim: true }
 });
+
+
+const Address = new mongoose.Schema({
+    address1 : { type: String, trim: true },
+    address2 : { type: Number },    
+    city : { type: String, trim: true },
+    state : { type: String, trim: true },
+    pincode : { type: String, trim : true }
+});
+
 
 
 const UserSchema = new mongoose.Schema({
@@ -23,8 +33,9 @@ const UserSchema = new mongoose.Schema({
     service: { type: String, trim: true },
     software: { type: String, trim: true },
     oncloud: { type: Boolean },
-    role: { type: String, default: 'user', enum: ['user', 'partner', 'admin'] },
-    education: education
+    role: { type: String, default: 'client', enum: ['client', 'partner', 'admin'] },
+    education: Education,
+    address: Address
 },{ timestamps : true });
 
 

@@ -28,11 +28,12 @@ const options = {
                 },
             },
         },
-        security: [
+        tags: [
             {
-                bearerAuth: [],
-            },
-        ],
+                name: 'USERS',
+                description: 'Operations related to users',
+            }
+        ]
     },
     apis: [path.resolve(__dirname, '../index.js'), path.resolve(__dirname, '../routes/*.js')]
 };

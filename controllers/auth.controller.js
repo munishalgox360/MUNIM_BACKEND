@@ -1,6 +1,6 @@
 import UserModel from '../models/user.schema.js'
-import Bcrypt from 'bcryptjs';
 import { loginToken } from '../middleware/auth.js';
+import { sanitizeUser } from '../utils/common.js';
 
 // -------------- Auth Handler Functions -------------- //
 
@@ -10,11 +10,11 @@ export async function SignUpUser(req, res) {
     try {   
         const isExist = await UserModel.findOne({ $and : [{email : email},{mobile : mobile}]});
         //check
-        if(isExist) return res.status(403).json({ success : false, message : "Already Registered" });
+        if(isExist) return res.status(400).json({ success : false, message : "Already Registered" });
 
         const response = await UserModel.create(req.body); 
         if(response){
-            return res.status(201).json({ success : true, message : "User created Successfully", data : response });    
+            return res.status(201).json({ success : true, message : "User created Successfully"});    
         }else{
             return res.status(409).json({ success : false, message : "Failed to Register"});    
         }
@@ -38,7 +38,7 @@ export async function SignInUser(req, res) {
 
         const token = await loginToken(isUser);
         if(token) {
-            return res.status(200).json({ success : true, message : "User logged in successfully", data : isUser, authToken : token })
+            return res.status(200).json({ success : true, message : "User logged in successfully", data : sanitizeUser(isUser), authToken : token })
         }else{
             return res.status(500).json({ success : false, message : "AUTH_TOKEN NOT GENERATED" })
         }

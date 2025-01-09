@@ -7,12 +7,12 @@ import { sanitizeUser } from '../utils/common.js';
 export async function loginToken(user){
     
     const payload = {
-        user : user._id,
+        userId : user._id,
         role : user.role
     }
 
     const options = {
-        expiresIn : '1d',
+        expiresIn : '7d',
         issuer : 'Algox360'
     }
 
@@ -29,15 +29,15 @@ export async function verifyUser(req, res, next) {
 
     const APP_SECRET = process.env.MUNIM_SECRET_KEY;
     const header = req.headers.authorization;
-    if(!header) return res.sendStatus(499).json({ success : false, message : 'Token Required'})
-
+    if(!header) return res.status(499).json({ success : false, message : 'Token Required' });
+     
     const [type, authToken] = header.split(" ");
-    if(type !== 'bearer') return res.sendStatus(498).json({ success : false, message : 'Unauthorize'});
+    if(type !== 'Bearer') return res.status(498).json({ success : false, message : 'Incorrect Token' });
     
     const decode = await JWT.verify(authToken, APP_SECRET);
-    if(!decode) return res.sendStatus(498).json({  success : false, message : 'Session Expired'});
-
-    const user = await UserModel.findById(decode.user);
+    if(!decode) return res.status(498).json({ success : false, message : 'Session Expired' });
+    
+    const user = await UserModel.findById(decode.userId);
     req.user = sanitizeUser(user);
     next();
 }
